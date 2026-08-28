@@ -9,6 +9,31 @@ PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
 
 say() { printf '  %s\n' "$*"; }
 
+# Le PATH de l'installeur n'est pas celui du shell de connexion : on teste dans
+# un shell vierge, sinon la commande reste introuvable dans un vrai terminal.
+ensure_path() {
+  bin="$1"
+  if env -i HOME="$HOME" "${SHELL:-/bin/zsh}" -lc 'echo $PATH' 2>/dev/null \
+       | tr ':' '\n' | grep -qx "$bin"; then
+    say "PATH        $bin déjà accessible"
+    return 0
+  fi
+  case "${SHELL:-/bin/zsh}" in
+    *bash) prof="$HOME/.bash_profile" ;;
+    *)     prof="${ZDOTDIR:-$HOME}/.zprofile" ;;
+  esac
+  if grep -qF "$bin:\$PATH" "$prof" 2>/dev/null; then
+    say "PATH        déjà déclaré dans $prof"
+  else
+    {
+      printf '\n# rend accessibles les commandes installées dans %s\n' "$bin"
+      printf 'export PATH="%s:$PATH"\n' "$bin"
+    } >> "$prof"
+    say "PATH        $bin ajouté à $prof — ouvre un nouveau terminal"
+  fi
+}
+
+
 echo
 echo "flow2obsidian — installation"
 echo
@@ -66,10 +91,7 @@ exec python3 "$HOME/.local/share/flow2obsidian/flow2obsidian.py" "$@"
 WRAP
 chmod +x "$BIN/flow2obsidian"
 say "commande    $BIN/flow2obsidian"
-case ":$PATH:" in
-  *":$BIN:"*) ;;
-  *) say "ATTENTION  $BIN n'est pas dans ton PATH — ajoute-le à ton profil." ;;
-esac
+ensure_path "$BIN"
 
 # --- arborescence du vault -------------------------------------------------
 python3 - "$BASE/config.json" <<'PY'
