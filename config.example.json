@@ -1,0 +1,27 @@
+{
+  "vault": null,
+  "flow_db": null,
+  "claude_bin": null,
+  "model": "sonnet",
+  "language": "fr",
+
+  "settle_minutes": 3,
+  "max_wait_minutes": 45,
+  "min_words": 120,
+  "include_dictations": true,
+  "keep_raw": true,
+
+  "folders": {
+    "cours": "10 Cours",
+    "transcripts": "20 Transcripts",
+    "matieres": "30 Matieres",
+    "journal": "40 Journal",
+    "meta": "90 Meta"
+  },
+
+  "matieres_connues": [],
+  "alias_matieres": {},
+  "emploi_du_temps": [],
+  "marge_emploi_du_temps_min": 20,
+  "titre_toujours_separe": false
+}

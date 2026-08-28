@@ -1,0 +1,6 @@
+config.json
+state.sqlite
+*.log
+run.lock
+__pycache__/
+.DS_Store

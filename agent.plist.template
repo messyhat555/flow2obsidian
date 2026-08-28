@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.flow2obsidian.agent</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>__WRAPPER__</string>
+    <string>run</string>
+  </array>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>__PATH__</string>
+    <key>HOME</key>
+    <string>__HOME__</string>
+  </dict>
+
+  <key>WatchPaths</key>
+  <array>
+    <string>__FLOWWAL__</string>
+  </array>
+
+  <key>StartInterval</key>
+  <integer>600</integer>
+  <key>ThrottleInterval</key>
+  <integer>120</integer>
+  <key>RunAtLoad</key>
+  <false/>
+  <key>ProcessType</key>
+  <string>Background</string>
+  <key>LowPriorityIO</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>__BASE__/launchd.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>__BASE__/launchd.err.log</string>
+</dict>
+</plist>
